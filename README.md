@@ -50,16 +50,29 @@ git clone https://github.com/injosh2026/TravelIsrael-dotnet.git
 cd TravelIsrael-dotnet
 ```
 
-### 2. יצירת מסד הנתונים
+### 2. מסד הנתונים (עם נתוני דוגמה)
+
+**אפשרות א' — שחזור מגיבוי (מומלץ)**
+
+קובץ הגיבוי נמצא ב-`Database/projectTripDB.bak` (כולל טיולים, מקומות, ביקורות ועוד).
+
+1. פתחי **SSMS** והתחברי ל-`(localdb)\MSSQLLocalDB`
+2. **Restore Database** מהקובץ `Database/projectTripDB.bak`
+3. שם המסד: `ProjectTripsDB`
+
+פירוט מלא: [Database/README.md](Database/README.md)
+
+**אפשרות ב' — רק מבנה + Admin (בלי נתוני דוגמה)**
 
 ```bash
+dotnet tool install --global dotnet-ef   # פעם ראשונה בלבד
 dotnet ef database update --project ProjectTripsDB --startup-project ProjectTrips
 ```
 
 Connection String מוגדר ב-`ProjectTripsDB/Models/ProjectTripsDataBase.cs`.  
-אם SQL Server שלך רץ על שרת אחר — עדכני את השורה לפני הרצת Migrations.
+אם SQL Server שלך רץ על שרת אחר — עדכני את השורה לפני שחזור/הרצת Migrations.
 
-**משתמש Admin ראשוני (Seed):**
+**משתמש Admin:**
 
 | שדה | ערך |
 |-----|-----|
@@ -120,6 +133,7 @@ CORS מוגדר ב-`Program.cs` לאפשר `localhost:517x` (Vite).
 ```
 ProjectTrips/
 ├── ProjectTrips.sln
+├── Database/               # גיבוי SQL (projectTripDB.bak)
 ├── ProjectTrips/           # ASP.NET Core Web API
 │   ├── Controller/
 │   ├── Program.cs
